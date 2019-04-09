@@ -9,7 +9,7 @@ func confirm(email: String, code: String) = {
 		if (matched) then {
 			WriteSet([
 				DataEntry(email, i.caller.bytes),
-				DataEntry(email + "#hash", base58'')
+				# DataEntry(email + "#hash", base58'')
 			])
 		} else {
 			throw("ooops")
