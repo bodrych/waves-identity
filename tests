@@ -1,0 +1,40 @@
+it('Set hash from account of identity tool', async function(){
+    const dtx = data({
+        data: [
+            { key: 'test@test.ru#hash', type: 'binary', value: 'base64:l+sh41R+3wMhUsuGq7aCbblE9N17Fhhf3YY/wDesdZk=' }
+        ], 
+        fee: 500000
+    })
+    await broadcast(dtx)
+})
+
+it('Confirm email by user 1', async function(){
+    const itx = invokeScript({
+        dappAddress: '3MsRyMBXjemAkwkWGhfsrK6oJujK2QqEXhz',
+        call: {
+            function: 'confirm',
+            args: [
+                { type: 'string', value: 'test@test.ru' },
+                { type: 'string', value: '15d361' }
+            ]
+        },
+        payment: []
+    })
+    await broadcast(itx)
+})
+
+it('Transfer to email of user 1 from user 2', async function(){
+    const itx = invokeScript({
+        dappAddress: '3MsRyMBXjemAkwkWGhfsrK6oJujK2QqEXhz',
+        call: {
+            function: 'transfer',
+            args: [
+                {type: 'string', value: 'test@test.ru'}
+            ]
+        },
+        payment: [
+            { amount: 1000 }
+        ]
+    })
+    await broadcast(itx)
+})
