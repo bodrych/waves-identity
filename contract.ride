@@ -8,7 +8,7 @@ func confirm(email: String, code: String) = {
 		let matched = targetHash == sha256(toBytes(code))
 		if (matched) then {
 			WriteSet([
-				DataEntry(email, i.caller.bytes),
+				DataEntry(email, i.caller.bytes)
 				# DataEntry(email + "#hash", base58'')
 			])
 		} else {
@@ -19,7 +19,7 @@ func confirm(email: String, code: String) = {
 @Callable(i)
 func transfer(email: String) = {
 		let pmt = extract(i.payment)
-		let targetAddress = extract(addressFromString(toBase58String(extract(getBinary(this, email)))))
+		let targetAddress = Address(extract(getBinary(this, email)))
 		TransferSet([ScriptTransfer(targetAddress, pmt.amount, pmt.assetId)])
     }
 
