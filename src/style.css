@@ -1,0 +1,54 @@
+body {
+	font-family: Consolas, monospace;
+	font-size: 14px;
+}
+input, select, textarea, option {
+	font-family: inherit;
+	font-size: inherit;
+}
+select, input[type=text], input[type=number], input[type=checkbox] {
+	border: none;
+	border-bottom: 1px solid lightgray;
+	width: 300px;
+}
+#app {
+	display: flex;
+}
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.flex-col {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/*align-items: center;*/
+	margin: 20px;
+}
+label {
+	margin: 5px;
+}
+input, select {
+	margin: 5px;
+	padding: 5px;
+}
+.button {
+	background-color: white;
+	color: black;
+	border: 1px solid lightgray;
+	transition-duration: 0.4s;
+}
+.button:hover {
+	background-color: lightgray;
+}
+.button:active {
+	color: white;
+}
+.submit {
+	width: 200px;
+}
+span {
+	margin: 5px;
+}

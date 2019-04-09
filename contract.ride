@@ -1,0 +1,34 @@
+{-# STDLIB_VERSION 3 #-}
+{-# CONTENT_TYPE DAPP #-}
+{-# SCRIPT_TYPE ACCOUNT #-}
+
+@Callable(i)
+func confirm(email: String, code: String) = {
+		let targetHash = extract(getBinary(this, email + "#hash"))
+		let matched = targetHash == sha256(toBytes(code))
+		if (matched) then {
+			WriteSet([
+				DataEntry(email, i.caller.bytes),
+				DataEntry(email + "#hash", base58'')
+			])
+		} else {
+			throw("ooops")
+		}
+    }
+
+@Callable(i)
+func transfer(email: String) = {
+		let pmt = extract(i.payment)
+		let targetAddress = extract(addressFromString(toBase58String(extract(getBinary(this, email)))))
+		TransferSet([ScriptTransfer(targetAddress, pmt.amount, pmt.assetId)])
+    }
+
+
+@Verifier(tx)
+func verify() = {
+    match tx {
+		case d: DataTransaction | SetScriptTransaction =>
+			sigVerify(tx.bodyBytes, tx.proofs[0], base58'A1cTG8JxYg5XuLsxRwspKRT2aJSjwGyfrvC2xrjCEcCX')
+		case _ => true
+	}
+}
